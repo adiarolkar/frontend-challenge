@@ -1,0 +1,53 @@
+.years {
+    background: $link_background_color;
+    padding: 26px 0;
+  .year{
+    text-align: center;
+    color: $link_text_color;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    font-weight: bold;
+    &#activeyear{
+      background: $link_text_color;
+      color: $link_background_color
+
+    }
+    &:hover{
+      background: $link_text_color;
+      color: $link_background_color
+      }
+    }
+}
+.races{
+  background:$grad_color1;
+  padding: 30px;
+  overflow-y: scroll;
+  max-height: 85vh;
+    &::-webkit-scrollbar
+  	{
+  		width: 6px;
+  		height: 4px;
+  		background: $scroll_bar_color;
+  	}
+  	&::-webkit-scrollbar-thumb
+  	{
+  		background-color: $scroll_color;
+  		-webkit-border-radius: 1ex;
+  	}
+  .table{
+    background: $card_color;
+    tbody tr{
+      transition: all .2s ease-in-out;
+      &:hover{
+          transform: scale(1.02);
+          -webkit-transition: scale(1.02);
+      }
+    }
+    .active{
+      background: $highlight_color;
+    }
+  }
+}

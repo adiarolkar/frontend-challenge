@@ -3,8 +3,6 @@ import React, { Component } from "react";
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
     this.refresh = this.refresh.bind(this);
     }
     refresh() {
@@ -12,20 +10,14 @@ class NavBar extends Component {
     }
     render() {
         return (
-            <div className="navbar">
-                <div className="header">
-                  <div className="container parentfloat">
-                    <div className="logo left">
-                      <h2 className="click" onClick={()=>this.refresh()}>F1 World Champions</h2>
-                    </div>
-                    <div className="right">
-                      <a className="link" href="https://fincompare.de/">
-                        FinCompare
-                      </a>
-                    </div>
-                  </div>
-                </div>
-            </div>
+            <nav className="navbar navbar-expand-lg navbar-dark header">
+              <div className="navbar-collapse">
+                <h2 className="click navbar-brand" onClick={()=>this.refresh()}>F1 World Champions</h2>
+              </div>
+              <span className="navbar-text">
+                <a className="nav-item nav-link active" href="https://fincompare.de/">FinCompare</a>
+              </span>
+            </nav>
         );
     }
 }

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import request from 'axios';
+import Race from './Race.jsx';
 import _ from 'lodash';
+import Loader from './Loader.jsx';
 
 class Season extends Component {
   constructor(props) {
@@ -10,6 +12,9 @@ class Season extends Component {
     };
   }
   getSeasonData(nextProps) {
+    this.setState({
+      seasonList: []
+    });
     var self = this;
     var seasonList = _.cloneDeep(this.state.seasonList);
     var url = "http://ergast.com/api/f1/" + nextProps.selectedYear + "/results/1.json";
@@ -20,7 +25,6 @@ class Season extends Component {
     })
       .then((res) => {
         var seasonTable  = res.data.MRData.RaceTable.Races;
-        console.log(seasonTable);
         self.setState({
           seasonList: seasonTable
         });
@@ -39,13 +43,13 @@ class Season extends Component {
         champ = false;
       }
       raceYears.push(
-        <div className={champ? "champ" : ""} id={item} key={i} onClick={()=>this.getSeasonData(item.season)}>
-            {item.Circuit.country}
-            {item.Circuit.circuitName}
-            {item.raceName}
-            {item.date}
-            {item.Results[0].Driver.givenName + ' ' + item.Results[0].Driver.familyName}
-        </div>
+        <Race
+          active={champ? true : false}
+          key={i}
+          itemNo={i}
+          onClick={()=>this.getSeasonData(item.season)}
+          raceDetails={item}
+        />
       );
     });
     return(raceYears);
@@ -54,12 +58,34 @@ class Season extends Component {
     this.getSeasonData(this.props);
   }
   componentWillReceiveProps(nextProps) {
-    this.getSeasonData(nextProps);
+    if(nextProps.selectedYear !== this.props.selectedYear) {
+      this.getSeasonData(nextProps);
+    }
   }
   render() {
       return (
         <div>
-          {this.createRaceCards()}
+        {this.state.seasonList.length?
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Driver</th>
+                <th scope="col">Race</th>
+                <th scope="col">Country</th>
+                <th scope="col">Circuit</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.createRaceCards()}
+            </tbody>
+          </table>
+          :
+          <Loader
+            dark={true}
+            />
+        }
         </div>
       );
   }

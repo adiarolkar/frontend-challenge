@@ -1,0 +1,33 @@
+// responsive
+@media screen and (max-width: 1440px) {
+  .years{
+    overflow-y: scroll;
+    height: 85vh;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .card{
+    width: 50%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .card{
+    width: 80%;
+  }
+}
+@media screen and (max-width: 496px) {
+  .navbar-dark .navbar-text a{
+    padding-left: 0;
+  }
+}
+@media screen and (max-width: 426px) {
+  .card {
+      width: 100%;
+  }
+  .click{
+    font-size: 25px;
+  }
+  .link{
+    margin-top: -5px;
+  }
+}

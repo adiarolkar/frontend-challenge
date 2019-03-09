@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import request from 'axios';
 import _ from 'lodash';
-import Season from './Season.jsx'
+import Season from './Season.jsx';
+import Loader from './Loader.jsx';
 
 const seasonsList = "http://ergast.com/api/f1/seasons.json?limit=40&offset=40";
 const champAPI = "http://ergast.com/api/f1/driverStandings/1.json?limit=11&offset=55"
@@ -13,11 +14,15 @@ class PageYear extends Component {
       yearList: [],
       isSeasonDataVisible: false,
       selectedYear: '',
-      champList: {}
+      champList: {},
+      isLoader: false
     };
     this.getSeasonData = this.getSeasonData.bind(this);
   }
   getYearList() {
+    this.setState({
+      isLoader: true
+    });
     var self = this;
     var yearList = _.cloneDeep(this.state.yearList);
     var newReq = request({
@@ -33,7 +38,8 @@ class PageYear extends Component {
           }
         });
         self.setState({
-          yearList
+          yearList,
+          isLoader: false
         });
       })
       .catch(console.warn);
@@ -52,7 +58,6 @@ class PageYear extends Component {
         _.forEach(champList, function (item, i) {
           champListObj[item.season] = item.DriverStandings[0].Driver.driverId;
         });
-        console.log(champListObj);
         self.setState({
           champList: champListObj
         });
@@ -60,7 +65,6 @@ class PageYear extends Component {
       .catch(console.warn);
   }
   getSeasonData(year) {
-    console.log(year);
     this.setState({
       selectedYear: year,
       isSeasonDataVisible: true
@@ -71,7 +75,7 @@ class PageYear extends Component {
     var raceYears = [];
     _.forEach(self.state.yearList, function (item, i) {
       raceYears.push(
-        <div id={item.season} key={i} onClick={()=>self.getSeasonData(item.season)}>
+        <div id={(self.state.selectedYear === item.season)? 'activeyear' : item.season} className="year" key={i} onClick={()=>self.getSeasonData(item.season)}>
           {item.season}
         </div>
       );
@@ -85,13 +89,33 @@ class PageYear extends Component {
   render() {
       return (
         <div>
-          {this.createYearCards()}
-          {this.state.isSeasonDataVisible &&
-            <Season
-              champList={this.state.champList}
-              selectedYear={this.state.selectedYear}
-              />
-            }
+          <div className="row">
+            <div className="col-3 years">
+              {this.createYearCards()}
+              {this.state.isLoader &&
+                <Loader
+                  dark={false}
+                  />
+              }
+            </div>
+            <div className="col-9 races">
+              {this.state.isSeasonDataVisible &&
+                <Season
+                  champList={this.state.champList}
+                  selectedYear={this.state.selectedYear}
+                  />
+                }
+              {!this.state.isSeasonDataVisible &&
+                <div>
+                  <div className="textbox center-text m-t-30">
+                    <h2>Welcome!!</h2>
+                    <h3 className="m-t-20">Take a look at the F1 Results from the year 2005 to 2015</h3>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+
         </div>
       );
   }
