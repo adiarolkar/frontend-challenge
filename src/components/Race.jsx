@@ -22,7 +22,7 @@ class Race extends Component {
           <th scope="row">{this.props.itemNo + 1}</th>
           <td>{this.props.raceDetails.Results[0].Driver.givenName + ' ' + this.props.raceDetails.Results[0].Driver.familyName}</td>
           <td>{this.props.raceDetails.raceName}</td>
-          <td>{this.props.raceDetails.Circuit.Location.country}</td>
+          <td>{this.props.raceDetails.Circuit.Location.locality}</td>
           <td>{this.props.raceDetails.Circuit.circuitName}</td>
           <td>{this.formatDate()}</td>
         </tr>

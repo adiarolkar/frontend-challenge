@@ -72,7 +72,7 @@ class Season extends Component {
                 <th scope="col">#</th>
                 <th scope="col">Driver</th>
                 <th scope="col">Race</th>
-                <th scope="col">Country</th>
+                <th scope="col">City</th>
                 <th scope="col">Circuit</th>
                 <th scope="col">Date</th>
               </tr>
